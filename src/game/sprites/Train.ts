@@ -1,6 +1,4 @@
-import Food from "./Food";
-import { Wall } from "../objects/wall";
-import { Gate } from "../objects/gate";
+import { Food, Wall, Gate } from "../objects";
 
 export const UP = 0;
 export const DOWN = 1;
@@ -8,6 +6,7 @@ export const LEFT = 2;
 export const RIGHT = 3;
 
 export class Train {
+  private stoppedTrain: boolean = true;
   alive: boolean = true;
   updated: any;
   moveTime: any;
@@ -76,45 +75,51 @@ export class Train {
   }
 
   update(time: number) {
-    if (time >= this.moveTime) {
-      return this.move(time);
-    }
+    return (time >= this.moveTime && this.stoppedTrain !== true) ?
+      this.move(time) :
+      false;
   }
 
   faceLeft(): void {
+    if (this.stoppedTrain) {
+      this.stoppedTrain = false;
+      this.heading = LEFT;
+    }
     if (this.direction === UP || this.direction === DOWN) {
       this.heading = LEFT;
-      this.head.setTexture('train').setAngle(0);
-      this.head.flipX = true;
     }
 }
 
 
 faceRight(): void {
+  if (this.stoppedTrain === true) {
+    this.stoppedTrain = false;
+    this.heading = RIGHT;
+  }
   if (this.direction === UP || this.direction === DOWN) {
     this.heading = RIGHT;
-    this.head.setTexture('train').setAngle(0);
-    this.head.flipX = false
   }
 }
 
 
 faceUp(): void {
+  if (this.stoppedTrain === true) {
+    this.stoppedTrain = false;
+    this.heading = UP;
+  }
   if (this.direction === LEFT || this.direction === RIGHT) {
     this.heading = UP;
-    this.head.setAngle(0);
-    this.head.flipX = false
-    this.head.setAngle(-90);
   }
 }
 
 
   faceDown(): void {
+    if (this.stoppedTrain === true) {
+      this.stoppedTrain = false;
+      this.heading = DOWN;
+    }
     if (this.direction === LEFT || this.direction === RIGHT) {
       this.heading = DOWN;
-      this.head.setAngle(0);
-      this.head.flipX = false
-      this.head.setAngle(90);
     }
   }
 

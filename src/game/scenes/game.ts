@@ -1,7 +1,7 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 import { Train } from '../sprites/Train';
-import Food from '../sprites/Food';
+import { Food } from '../objects/food';
 import { Wall } from '../objects/wall';
 import { Gate } from '../objects/gate';
 
@@ -39,7 +39,7 @@ export class Game extends Scene {
         }
 
         if (level1[i][j] === 'f1') {
-          this.food.push(new Food(this, j, i))
+          this.food.push(new Food(this, j, i, "f1"))
         }
 
         if (level1[i][j] === 'g') {
